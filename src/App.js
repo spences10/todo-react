@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { TodoForm } from './components/todo/TodoForm'
 
 class App extends Component {
   // to render dynamically need to add state by adding constructior
@@ -31,9 +32,10 @@ class App extends Component {
           <h2>React Todos</h2>
         </div>
         <div className="todo-app">
-          <form>
-            <input type="text" onChange={this.handleInputChange} value={this.state.currentTodo}/> 
-          </form>
+          <TodoForm 
+            handleInputChange={this.handleInputChange} 
+            currentTodo={this.state.currentTodo}
+          />
           <div className="todo-app">
             <ul>
               {/*reference the constructor*/}
