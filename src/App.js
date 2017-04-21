@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css'
-import { TodoForm } from './components/todo/TodoForm'
+import { TodoForm, TodoList } from './components/todo'
 
 class App extends Component {
   // to render dynamically need to add state by adding constructior
@@ -36,15 +36,7 @@ class App extends Component {
             handleInputChange={this.handleInputChange} 
             currentTodo={this.state.currentTodo}
           />
-          <div className="todo-app">
-            <ul>
-              {/*reference the constructor*/}
-              {this.state.todos.map(todo => 
-                <li key={todo.id}>
-                  <input type="checkbox" defaultChecked={todo.isComplete}/> {todo.name}
-                </li>)}              
-            </ul>
-          </div>
+          <TodoList todos={this.state.todos}/>
         </div>
       </div>
     );
