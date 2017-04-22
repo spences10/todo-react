@@ -1,0 +1,8 @@
+const baseUrl = 'http://localhost:8080/todos'
+
+// used to load todo into application when application starts 
+
+export const loadTodos = () => {
+  return fetch(baseUrl)
+    .then(res => res.json())
+}
