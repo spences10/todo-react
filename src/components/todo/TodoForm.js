@@ -10,8 +10,8 @@ export const TodoForm = (props) => (
       value={props.currentTodo}/> 
   </form>)
 
-  TodoForm.propTypes = {
-    currentTodo: PropTypes.string.isRequired,
-    handleInputChange: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired
-  } 
+TodoForm.propTypes = {
+  currentTodo: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+} 

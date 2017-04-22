@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css'
-import { TodoForm, TodoList } from './components/todo'
+import {
+  TodoForm,
+  TodoList,
+  Footer
+} from './components/todo'
 import { 
   addTodo, 
   generateId, 
@@ -79,6 +83,7 @@ class App extends Component {
             todos={this.state.todos}
             handleRemove={this.handleRemove}
           />
+          <Footer />
         </div>
       </div>
     );
