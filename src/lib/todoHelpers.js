@@ -15,3 +15,12 @@ export const updateTodo = (list, updated) => {
   ]
 }
 
+export const removeTodo = (list, id) => {
+  const removeIndex = list.findIndex(item => item.id === id)
+  return [
+    ...list.slice(0, removeIndex),
+    ...list.slice(removeIndex+1)
+  ]
+}
+
+

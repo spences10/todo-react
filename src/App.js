@@ -7,7 +7,8 @@ import {
   generateId, 
   findById, 
   toggleTodo, 
-  updateTodo 
+  updateTodo,
+  removeTodo
 } from './lib/todoHelpers';
 import { pipe, partial } from './lib/utils'
 
@@ -21,8 +22,14 @@ class App extends Component {
     currentTodo: ''
   }
 
+  handleRemove = (id, evt) => {
+    evt.preventDefault()
+    const updatedTodos = removeTodo(this.state.todos, id)
+    this.setState({todos: updatedTodos})
+  }
+
   handleToggle = (id) => {
-    const getUpdatedTodos = pipe(findById, toggleTodo, updateTodo, this.state.todos)
+    const getUpdatedTodos = pipe(findById, toggleTodo, updateTodo, partial(updateTodo, this.state.todos))
     const updatedTodos = getUpdatedTodos(id, this.state.todos)
     this.setState({todos: updatedTodos})
   }
@@ -70,6 +77,7 @@ class App extends Component {
           <TodoList 
             handleToggle={this.handleToggle}
             todos={this.state.todos}
+            handleRemove={this.handleRemove}
           />
         </div>
       </div>

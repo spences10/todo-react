@@ -41,6 +41,21 @@ li {
   list-style-type: none
 }
 
-.error {
-  color: red
+li span.delete-item {
+  visibility: hidden;
 }
+
+span.delete-item a {
+  text-decoration: none;
+  color: red;
+}
+
+li:hover span.delete-item a {
+  visibility: visible;
+}
+
+.error {
+  color: red;
+}
+
+
