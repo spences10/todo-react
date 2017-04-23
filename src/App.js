@@ -17,7 +17,12 @@ import {
 } from './lib/todoHelpers';
 import { pipe, partial } from './lib/utils'
 import PropTypes from 'prop-types'
-import { loadTodos, createTodo } from './lib/todoService'
+import {
+  loadTodos,
+  createTodo,
+  saveTodo,
+  destryoTodo
+} from './lib/todoService'
 
 class App extends Component {
   state = {
@@ -38,12 +43,18 @@ class App extends Component {
     evt.preventDefault()
     const updatedTodos = removeTodo(this.state.todos, id)
     this.setState({todos: updatedTodos})
+    destryoTodo(id)
+      .then(() => this.showTempMessage('Todo Removed'))
   }
 
   handleToggle = (id) => {
-    const getUpdatedTodos = pipe(findById, toggleTodo, updateTodo, partial(updateTodo, this.state.todos))
-    const updatedTodos = getUpdatedTodos(id, this.state.todos)
+    const getToggledTodo = pipe(findById, toggleTodo)
+    const updated = getToggledTodo(id, this.state.todos)
+    const getUpdatedTodos = partial(updateTodo, this.state.todos)
+    const updatedTodos = getUpdatedTodos(updated)
     this.setState({todos: updatedTodos})
+    saveTodo(updateTodo)
+    .then(() => this.showTempMessage('Todo Updated'))
   }
 
   handleSubmit = (evt) => {

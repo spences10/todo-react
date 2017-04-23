@@ -17,3 +17,24 @@ export const createTodo = (todo) => {
     body: JSON.stringify(todo)
   }).then(res => res.json())
 }
+
+export const saveTodo = (todo) => {
+  return fetch(`${baseUrl}/${todo.id}`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(todo)
+  }).then(res => res.json())
+}
+
+export const destryoTodo = (id) => {
+  return fetch(`${baseUrl}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-type': 'application/json'
+    }
+  })
+}
