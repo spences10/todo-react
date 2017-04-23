@@ -12,7 +12,7 @@ export const createTodo = (todo) => {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-type': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(todo)
   }).then(res => res.json())
@@ -23,18 +23,18 @@ export const saveTodo = (todo) => {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
-      'Content-type': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(todo)
   }).then(res => res.json())
 }
 
-export const destryoTodo = (id) => {
+export const destroyTodo = (id) => {
   return fetch(`${baseUrl}/${id}`, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',
-      'Content-type': 'application/json'
+      'Content-Type': 'application/json'
     }
   })
 }

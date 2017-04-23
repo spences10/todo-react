@@ -21,7 +21,7 @@ import {
   loadTodos,
   createTodo,
   saveTodo,
-  destryoTodo
+  destroyTodo
 } from './lib/todoService'
 
 class App extends Component {
@@ -43,7 +43,7 @@ class App extends Component {
     evt.preventDefault()
     const updatedTodos = removeTodo(this.state.todos, id)
     this.setState({todos: updatedTodos})
-    destryoTodo(id)
+    destroyTodo(id)
       .then(() => this.showTempMessage('Todo Removed'))
   }
 
@@ -53,22 +53,22 @@ class App extends Component {
     const getUpdatedTodos = partial(updateTodo, this.state.todos)
     const updatedTodos = getUpdatedTodos(updated)
     this.setState({todos: updatedTodos})
-    saveTodo(updateTodo)
-    .then(() => this.showTempMessage('Todo Updated'))
+    saveTodo(updated)
+      .then(() => this.showTempMessage('Todo Updated'))
   }
 
   handleSubmit = (evt) => {
     evt.preventDefault()
     const newId = generateId()
     const newTodo = {id: newId, name: this.state.currentTodo, isComplete: false}
-    const updateTodos = addTodo(this.state.todos, newTodo)
+    const updatedTodos = addTodo(this.state.todos, newTodo)
     this.setState({
-      todos: updateTodos,
+      todos: updatedTodos,
       currentTodo: '',
       errorMessage: ''
     })
     createTodo(newTodo)
-      .then(() => this.showTempMessage('Todo added'))
+      .then(() => this.showTempMessage('Todo Added'))
   }
 
   showTempMessage = (msg) => {
@@ -79,7 +79,7 @@ class App extends Component {
   handleEmptySubmit = (evt) => {
     evt.preventDefault()
     this.setState({
-      errorMessage: 'Please suppy a todo name.'
+      errorMessage: 'Please supply a todo name.'
     })
   }
 
@@ -118,4 +118,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
