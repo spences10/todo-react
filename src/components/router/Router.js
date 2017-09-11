@@ -11,14 +11,16 @@ export class Router extends Component {
     route: getCurrentPath()
   }
 
+  /*global event*/
+  /*eslint no-restricted-globals: ["error", "event"]*/
   handleLinkClick = (route) => {
-    this.setState({route})
+    this.setState({ route })
     history.pushState(null, '', route)
   }
 
   static childContextTypes = {
-    route: PropTypes.string, 
-    linkHandler: PropTypes.func 
+    route: PropTypes.string,
+    linkHandler: PropTypes.func
   }
 
   getChildContext() {
@@ -30,11 +32,11 @@ export class Router extends Component {
 
   componentDidMount() {
     window.onpopstate = () => {
-      this.setState({route: getCurrentPath()})
+      this.setState({ route: getCurrentPath() })
     }
   }
 
-  render () {
+  render() {
     return <div>{this.props.children}</div>
   }
 }
