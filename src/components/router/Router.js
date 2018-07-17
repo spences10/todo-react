@@ -13,7 +13,7 @@ export class Router extends Component {
 
   /*global event*/
   /*eslint no-restricted-globals: ["error", "event"]*/
-  handleLinkClick = (route) => {
+  handleLinkClick = route => {
     this.setState({ route })
     history.pushState(null, '', route)
   }
