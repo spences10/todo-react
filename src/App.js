@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
+
+import { TodoForm, TodoList, Footer } from './components/todo'
+
 import {
-  TodoForm,
-  TodoList,
-  Footer
-} from './components/todo'
-import { 
-  addTodo, 
-  generateId, 
-  findById, 
-  toggleTodo, 
+  addTodo,
+  generateId,
+  findById,
+  toggleTodo,
   updateTodo,
   removeTodo,
   filterTodos
-} from './lib/todoHelpers';
+} from './lib/todoHelpers'
+
 import { pipe, partial } from './lib/utils'
+
 import PropTypes from 'prop-types'
+
 import {
   loadTodos,
   createTodo,
@@ -24,9 +25,10 @@ import {
   destroyTodo
 } from './lib/todoService'
 
+import todos from './db'
 class App extends Component {
   state = {
-    todos: [],
+    ...todos,
     currentTodo: ''
   }
 
@@ -35,63 +37,71 @@ class App extends Component {
   }
 
   componentDidMount() {
-    loadTodos()
-      .then(todos => this.setState({todos}))
-  } 
+    loadTodos().then(todos => this.setState({ todos }))
+  }
 
   handleRemove = (id, evt) => {
     evt.preventDefault()
     const updatedTodos = removeTodo(this.state.todos, id)
-    this.setState({todos: updatedTodos})
-    destroyTodo(id)
-      .then(() => this.showTempMessage('Todo Removed'))
+    this.setState({ todos: updatedTodos })
+    destroyTodo(id).then(() => this.showTempMessage('Todo Removed'))
   }
 
-  handleToggle = (id) => {
-    const getToggledTodo = pipe(findById, toggleTodo)
+  handleToggle = id => {
+    const getToggledTodo = pipe(
+      findById,
+      toggleTodo
+    )
     const updated = getToggledTodo(id, this.state.todos)
     const getUpdatedTodos = partial(updateTodo, this.state.todos)
     const updatedTodos = getUpdatedTodos(updated)
-    this.setState({todos: updatedTodos})
-    saveTodo(updated)
-      .then(() => this.showTempMessage('Todo Updated'))
+    this.setState({ todos: updatedTodos })
+    saveTodo(updated).then(() => this.showTempMessage('Todo Updated'))
   }
 
-  handleSubmit = (evt) => {
+  handleSubmit = evt => {
     evt.preventDefault()
     const newId = generateId()
-    const newTodo = {id: newId, name: this.state.currentTodo, isComplete: false}
+    const newTodo = {
+      id: newId,
+      name: this.state.currentTodo,
+      isComplete: false
+    }
     const updatedTodos = addTodo(this.state.todos, newTodo)
     this.setState({
       todos: updatedTodos,
       currentTodo: '',
       errorMessage: ''
     })
-    createTodo(newTodo)
-      .then(() => this.showTempMessage('Todo Added'))
+    createTodo(newTodo).then(() => this.showTempMessage('Todo Added'))
   }
 
-  showTempMessage = (msg) => {
-    this.setState({message: msg})
-    setTimeout(() => this.setState({message: ''}), 2500) 
+  showTempMessage = msg => {
+    this.setState({ message: msg })
+    setTimeout(() => this.setState({ message: '' }), 2500)
   }
 
-  handleEmptySubmit = (evt) => {
+  handleEmptySubmit = evt => {
     evt.preventDefault()
     this.setState({
       errorMessage: 'Please supply a todo name.'
     })
   }
 
-  handleInputChange = (evt) => {
+  handleInputChange = evt => {
     this.setState({
       currentTodo: evt.target.value
     })
   }
 
   render() {
-    const submitHandler = this.state.currentTodo ? this.handleSubmit : this.handleEmptySubmit
-    const displayTodos = filterTodos(this.state.todos, this.context.route)
+    const submitHandler = this.state.currentTodo
+      ? this.handleSubmit
+      : this.handleEmptySubmit
+    const displayTodos = filterTodos(
+      this.state.todos,
+      this.context.route
+    )
     return (
       <div className="App">
         <div className="App-header">
@@ -99,14 +109,18 @@ class App extends Component {
           <h2>React Todos</h2>
         </div>
         <div className="todo-app">
-          {this.state.errorMessage && <span className="error">{this.state.errorMessage}</span>}
-          {this.state.message && <span className="success">{this.state.message}</span>}
-          <TodoForm 
-            handleInputChange={this.handleInputChange} 
+          {this.state.errorMessage && (
+            <span className="error">{this.state.errorMessage}</span>
+          )}
+          {this.state.message && (
+            <span className="success">{this.state.message}</span>
+          )}
+          <TodoForm
+            handleInputChange={this.handleInputChange}
             currentTodo={this.state.currentTodo}
             handleSubmit={submitHandler}
           />
-          <TodoList 
+          <TodoList
             handleToggle={this.handleToggle}
             todos={displayTodos}
             handleRemove={this.handleRemove}
@@ -114,7 +128,7 @@ class App extends Component {
           <Footer />
         </div>
       </div>
-    );
+    )
   }
 }
 
