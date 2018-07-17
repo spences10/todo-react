@@ -1,6 +1,6 @@
 # Yet another to-do app!
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/spences10/todo-react.svg)](https://greenkeeper.io/)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 
 A simple to-do app in react!
 
