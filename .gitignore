@@ -8,6 +8,7 @@
 
 # production
 /build
+/todo-react
 
 # misc
 .DS_Store
